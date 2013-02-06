@@ -17,21 +17,33 @@ For every reference about the original concept by int0x80 please look at:<br>
 - Youtube - "Anti-Forensic for the Louise" http://www.youtube.com/watch?v=-HK1JHR7LIM<br>
 - Youtube - "Moar Anti-Forensic for the Louise" http://www.youtube.com/watch?v=i3nLrJrkYOc<br>
 
+___
 
 Requirements:
 =============
 
-On Ubuntu 11.04:
-- python >= 2.7<br>
-- python-wxgtk2.8 >= 2.8.12.1<br>
-- pyudev >= 0.16.1<br>
+Must:<br>
+-----
+- A PC with a Linux distribution installed (preferred: Ubuntu, Mint)<br>
+- Python interpreter, pyudev library and wxwidget bindings for python.<br>
+  - python >= 2.7<br>
+  - python-wxgtk2.8 >= 2.8.12.1<br>
+  - pyudev >= 0.16.1<br>
+    e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
+         About pyudev >= 0.16.1 look at: https://launchpad.net/ubuntu/+source/pyudev<br>
 
+Should:<br>
+-------
+- HD with Full Disk Encryption enabled e with a sifficient strong password
+
+___
 
 Usage:
 ======
 
 Simply run it with superadmin privileges<br>
 
+___
 
 ToDo:
 =====
@@ -49,7 +61,8 @@ ToDo:
 - Clean and revise code<br>
 
 - More Tests
- 
+
+___
 
 Known bugs:
 ===========
