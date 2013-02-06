@@ -42,7 +42,8 @@ Simply run it with superadmin privileges<br>
 - Add MMC/SD/others controls<br>
 - Add a checksum system for personal pendrives<br>
 - Add the options to run default actions when device is detected<br>
-- Add Shortcut and menu option to hide the trayicon<br>
+- Add Shortcut and menu option to hide the trayicon (partially implemented. At the moment<br>
+  only hide is possible, no resume from hide)<br>
 - Password protect Quit action (maybe)<br>
 - Password protect Settings menu (maybe)<br>
 - Password protect Stop action (maybe)<br>
