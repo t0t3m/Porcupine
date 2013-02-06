@@ -24,11 +24,11 @@ class Porcupine_main(wx.Frame):
         self.chkbox_sd = xrc.XRCCTRL(self.frame_settings, "chkbox_sd")
         self.frame_settings.Bind(wx.EVT_CLOSE, self.FrameClose)
 
-    def check_usb():
-        pass
+    def OnHide(self, event):
+        self.tskic.RemoveIcon()
 
     def OnAbout(self, event):
-        wx.MessageBox("ABOUT.")
+        wx.MessageBox("Porcupine")
 
     def OnQuit(self, event):
         self.tskic.Destroy()
@@ -70,16 +70,18 @@ class PorcupineTaskBarIcon(wx.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.frame.OnObserverStart, id=1)
         self.Bind(wx.EVT_MENU, self.frame.OnObserverStop, id=2)
         self.Bind(wx.EVT_MENU, self.frame.OnSettings, id=3)
-        self.Bind(wx.EVT_MENU, self.frame.OnAbout, id=4)
-        self.Bind(wx.EVT_MENU, self.frame.OnQuit, id=5)
+        self.Bind(wx.EVT_MENU, self.frame.OnHide, id=4)
+        self.Bind(wx.EVT_MENU, self.frame.OnAbout, id=5)
+        self.Bind(wx.EVT_MENU, self.frame.OnQuit, id=6)
 
     def CreatePopupMenu(self):
         self.menu = wx.Menu()
         self.menu.Append(1, 'Start')
         self.menu.Append(2, 'Stop')
         self.menu.Append(3, 'Settings')
-        self.menu.Append(4, 'About')
-        self.menu.Append(5, 'Quit')
+        self.menu.Append(4, 'Hide')
+        self.menu.Append(5, 'About')
+        self.menu.Append(6, 'Quit')
         return self.menu
 
 
@@ -103,24 +105,38 @@ class Observer:
         self.obs.enabled = False
 
     def OnDispatch(self, event):
-        if(str(event.action) == "add" and str(event.device.device_node[7]) != "a" and str(event.device.device_node[5:7]) == "sd" and self.chkbox_usb.GetValue() == True and event.device['ID_BUS'] != "scsi" and event.device['ID_BUS'] == "usb"):
-            if(self.radio_mode.GetStringSelection() == "Defensive"):
-                self.evil.OnReboot()
-            elif(self.radio_mode.GetStringSelection() == "Offensive"):
-                self.evil.OnOverwrite(event.device)
-            else:
-                self.evil.OnOverwrite(event.device)
-                self.evil.OnReboot()
-        elif(str(event.action) == "change" and str(event.device.device_node[5:7]) == "sr" and self.chkbox_cd.GetValue() == True and event.device['ID_BUS'] == "scsi" and event.device['ID_TYPE'] == 'cd'):
-            if(self.radio_mode.GetStringSelection() == "Defensive"):
-                self.evil.OnReboot()
-            elif(self.radio_mode.GetStringSelection() == "Offensive"):
-                self.evil.OnEject(event.device)
-            else:
-                self.evil.OnEject(event.device)
-                self.evil.OnReboot()
+        if(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_usb.GetValue() == True):
+            self.evil.OnReboot()   
+        elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_usb.GetValue() == True):
+            self.evil.OnOverwrite(event.device)
+        elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_usb.GetValue() == True):
+            self.evil.OnOverwrite(event.device)
+            self.evil.OnReboot()
+        elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_cd.GetValue() == True):
+            self.evil.OnReboot() 
+        elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_cd.GetValue() == True):
+            self.evil.OnEject(event.device)
+        elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_cd.GetValue() == True):
+            self.evil.OnEject(event.device)
+            self.evil.OnReboot()
         else:
             pass
+
+    def is_usb(self, event):
+        if(str(event.action) == "add" and str(event.device.device_node[7]) != "a" and str(event.device.device_node[5:7]) == "sd" and event.device['ID_BUS'] != "scsi" and event.device['ID_BUS'] == "usb"):
+            return True
+        else:
+            return False
+
+    def is_cd(self, event):
+        if(str(event.action) == "change" and str(event.device.device_node[5:7]) == "sr" and self.chkbox_cd.GetValue() == True and event.device['ID_BUS'] == "scsi" and event.device['ID_TYPE'] == 'cd'):
+            return True
+        else:
+            return False
+
+    def is_sd(self, event):
+        pass
+
 
 
 class Evil:
