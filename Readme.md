@@ -20,6 +20,8 @@ For every reference about the original concept by int0x80 please look at:<br>
 
 Requirements:
 =============
+
+On Ubuntu 11.04:
 - python >= 2.7<br>
 - python-wxgtk2.8 >= 2.8.12.1<br>
 - pyudev >= 0.16.1<br>
