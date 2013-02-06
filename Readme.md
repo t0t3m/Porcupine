@@ -1,11 +1,10 @@
-Porcupine:
-==========
+# Porcupine:
 
 Software to prevent unauthorized physical access to your machine.<br>
 It listens for udev events and could take 3 different actions when certain storage devices are detected:<br>
-- 1 - Defense (Reboot PC)<br>
-- 2 - Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD rom it'll be eject)<br>
-- 3 - Offense + Defense (The previus modes, combined)<br>
+  1. Defense (Reboot PC)<br>
+  2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD rom it'll be eject)<br>
+  3. Offense + Defense (The previus modes, combined)<br>
 
 I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
@@ -17,13 +16,10 @@ For every reference about the original concept by int0x80 please look at:<br>
 - Youtube - "Anti-Forensic for the Louise" http://www.youtube.com/watch?v=-HK1JHR7LIM<br>
 - Youtube - "Moar Anti-Forensic for the Louise" http://www.youtube.com/watch?v=i3nLrJrkYOc<br>
 
-___
 
-Requirements:
-=============
+# Requirements:
 
-Must:<br>
------
+**Must:**<br>
 - A PC with a Linux distribution installed (preferred: Ubuntu, Mint)<br>
 - Python interpreter, pyudev library and wxwidget bindings for python.<br>
   - python >= 2.7<br>
@@ -32,21 +28,16 @@ Must:<br>
     e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
          About pyudev >= 0.16.1 look at: https://launchpad.net/ubuntu/+source/pyudev<br>
 
-Should:<br>
--------
+**Should:**<br>
 - HD with Full Disk Encryption enabled e with a sifficient strong password
 
-___
 
-Usage:
-======
+# Usage:
 
 Simply run it with superadmin privileges<br>
 
-___
 
-ToDo:
-=====
+# ToDo:
 
 - Add MMC/SD/others controls<br>
 - Add a checksum system for personal pendrives<br>
@@ -59,8 +50,7 @@ ToDo:
 - Fill or remove the about messagebox<br>
 - Fix tray icon<br>
 - Clean and revise code<br>
-
-- More Tests
+- More Tests<br>
 
 ___
 
