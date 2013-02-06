@@ -52,9 +52,7 @@ Simply run it with superadmin privileges<br>
 - Clean and revise code<br>
 - More Tests<br>
 
-___
 
-Known bugs:
-===========
+# Known bugs:
 
 - Sometimes the tray icon is displayed wrong<br>
