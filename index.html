@@ -33,13 +33,18 @@
         <h1>Porcupine:</h1>
 
 <p>Software to prevent unauthorized physical access to your machine.<br>
-It listens for udev events and could take 3 different actions when certain storage devices are detected:<br>
-1. Defense (Reboot PC)<br>
-2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD ROM it'll be eject)<br>
-3. Offense + Defense (The previus modes, combined)<br></p>
+It listens for udev events and could take 3 different actions when certain storage devices are detected:<br></p>
 
-<p>I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
-(e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and the intruder will be redirected to FDE password prompt)<br></p>
+<ol>
+<li>Defense (Reboot PC)<br>
+</li>
+<li>Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD ROM it'll be eject)<br>
+</li>
+<li>Offense + Defense (The previus modes, combined)<br>
+</li>
+</ol><p>I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
+(e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
+the intruder will be redirected to FDE password prompt)<br></p>
 
 <p>This program is created with int0x80 talk "Ant-Forensic for the Louise" from Derbycon 2012 in mind.<br>
 For every reference about the original concept by int0x80 please look at:<br></p>
@@ -86,7 +91,8 @@ e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
 </li>
 <li>Add the options to run default actions when device is detected<br>
 </li>
-<li>Add Shortcut and menu option to hide the trayicon<br>
+<li>Add Shortcut and menu option to hide the trayicon (partially implemented. At the moment<br>
+only hide is possible, no resume from hide)<br>
 </li>
 <li>Password protect Quit action (maybe)<br>
 </li>
