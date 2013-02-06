@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Porcupine by t0t3m</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Porcupine</h1>
+        <p class="header">Linux software to prevent unauthorized physical access to your machine.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/t0t3m/Porcupine/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/t0t3m/Porcupine/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/t0t3m/Porcupine">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/t0t3m">t0t3m</a></p>
+
+
+      </header>
+      <section>
+        <h1>Porcupine:</h1>
+
+<p>Software to prevent unauthorized physical access to your machine.<br>
+It listens for udev events and could take 3 different actions when certain storage devices are detected:<br>
+1. Defense (Reboot PC)<br>
+2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD rom it'll be eject)<br>
+3. Offense + Defense (The previus modes, combined)<br></p>
+
+<p>I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
+(e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
+the intruder will be redirected to FDE password prompt)<br></p>
+
+<p>This program is created with int0x80 talk "Ant-Forensic for the Louise" from Derbycon 2012 in mind.<br>
+For every reference about the original concept by int0x80 please look at:<br></p>
+
+<ul>
+<li>GitHub  - <a href="https://github.com/int0x80/anti-forensics">https://github.com/int0x80/anti-forensics</a><br>
+</li>
+<li>Youtube - "Anti-Forensic for the Louise" <a href="http://www.youtube.com/watch?v=-HK1JHR7LIM">http://www.youtube.com/watch?v=-HK1JHR7LIM</a><br>
+</li>
+<li>Youtube - "Moar Anti-Forensic for the Louise" <a href="http://www.youtube.com/watch?v=i3nLrJrkYOc">http://www.youtube.com/watch?v=i3nLrJrkYOc</a><br>
+</li>
+</ul><h1>Requirements:</h1>
+
+<p><strong>Must:</strong><br></p>
+
+<ul>
+<li>A PC with a Linux distribution installed (preferred: Ubuntu, Mint)<br>
+</li>
+<li>Python interpreter, pyudev library and wxwidget bindings for python.<br><ul>
+<li>python &gt;= 2.7<br>
+</li>
+<li>python-wxgtk2.8 &gt;= 2.8.12.1<br>
+</li>
+<li>pyudev &gt;= 0.16.1<br>
+e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
+ About pyudev &gt;= 0.16.1 look at: <a href="https://launchpad.net/ubuntu/+source/pyudev">https://launchpad.net/ubuntu/+source/pyudev</a><br>
+</li>
+</ul>
+</li>
+</ul><p><strong>Should:</strong><br></p>
+
+<ul>
+<li>HD with Full Disk Encryption enabled e with a sifficient strong password</li>
+</ul><h1>Usage:</h1>
+
+<p>Simply run it with superadmin privileges<br></p>
+
+<h1>ToDo:</h1>
+
+<ul>
+<li>Add MMC/SD/others controls<br>
+</li>
+<li>Add a checksum system for personal pendrives<br>
+</li>
+<li>Add the options to run default actions when device is detected<br>
+</li>
+<li>Add Shortcut and menu option to hide the trayicon<br>
+</li>
+<li>Password protect Quit action (maybe)<br>
+</li>
+<li>Password protect Settings menu (maybe)<br>
+</li>
+<li>Password protect Stop action (maybe)<br>
+</li>
+<li>Password protect Show trayicon action (maybe)<br>
+</li>
+<li>Fill or remove the about messagebox<br>
+</li>
+<li>Fix tray icon<br>
+</li>
+<li>Clean and revise code<br>
+</li>
+<li>More Tests<br>
+</li>
+</ul><hr><h1>Known bugs:</h1>
+
+<ul>
+<li>Sometimes the tray icon is displayed wrong<br>
+</li>
+</ul>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
