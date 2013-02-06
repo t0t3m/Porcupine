@@ -103,7 +103,7 @@ class Observer:
         self.obs.enabled = False
 
     def OnDispatch(self, event):
-        if(str(event.action) == "add" and str(event.device.device_node[7]) != "a" and str(event.device.device_node[5:7]) == "sd" and self.chkbox_usb.GetValue() == True):
+        if(str(event.action) == "add" and str(event.device.device_node[7]) != "a" and str(event.device.device_node[5:7]) == "sd" and self.chkbox_usb.GetValue() == True and event.device['ID_BUS'] != "scsi" and event.device['ID_BUS'] == "usb"):
             if(self.radio_mode.GetStringSelection() == "Defensive"):
                 self.evil.OnReboot()
             elif(self.radio_mode.GetStringSelection() == "Offensive"):
@@ -111,7 +111,7 @@ class Observer:
             else:
                 self.evil.OnOverwrite(event.device)
                 self.evil.OnReboot()
-        elif(str(event.action) == "change" and str(event.device.device_node[5:7]) == "sr" and self.chkbox_cd.GetValue() == True):
+        elif(str(event.action) == "change" and str(event.device.device_node[5:7]) == "sr" and self.chkbox_cd.GetValue() == True and event.device['ID_BUS'] == "scsi" and event.device['ID_TYPE'] == 'cd'):
             if(self.radio_mode.GetStringSelection() == "Defensive"):
                 self.evil.OnReboot()
             elif(self.radio_mode.GetStringSelection() == "Offensive"):
