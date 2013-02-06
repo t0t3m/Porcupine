@@ -3,7 +3,7 @@
 Software to prevent unauthorized physical access to your machine.<br>
 It listens for udev events and could take 3 different actions when certain storage devices are detected:<br>
   1. Defense (Reboot PC)<br>
-  2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD rom it'll be eject)<br>
+  2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD ROM it'll be eject)<br>
   3. Offense + Defense (The previus modes, combined)<br>
 
 I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
