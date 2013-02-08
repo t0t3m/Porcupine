@@ -3,6 +3,7 @@
 import wx
 from wx import xrc
 import subprocess
+import os
 from pyudev import Context, Monitor
 import pyudev.wx
 
@@ -11,7 +12,7 @@ class Porcupine_main(wx.Frame):
     def __init__(self):
         self.InitUI()
         self.observer_status = 0
-        self.obs = Observer(self.radio_mode, self.chkbox_usb, self.chkbox_cd, self.chkbox_sd)
+        self.obs = Observer(self.radio_mode, self.chkbox_usb, self.chkbox_cd, self.chkbox_sd, self.chkbox_dmesg, self.chkbox_bash_history)
         self.tskic = PorcupineTaskBarIcon(self)
 
     def InitUI(self):
@@ -22,6 +23,8 @@ class Porcupine_main(wx.Frame):
         self.chkbox_usb = xrc.XRCCTRL(self.frame_settings, "chkbox_usb")
         self.chkbox_cd = xrc.XRCCTRL(self.frame_settings, "chkbox_cd")
         self.chkbox_sd = xrc.XRCCTRL(self.frame_settings, "chkbox_sd")
+        self.chkbox_dmesg = xrc.XRCCTRL(self.frame_settings, "chkbox_dmesg")
+        self.chkbox_bash_history = xrc.XRCCTRL(self.frame_settings, "chkbox_bash_history")
         self.frame_settings.Bind(wx.EVT_CLOSE, self.FrameClose)
 
     def OnHide(self, event):
@@ -86,39 +89,47 @@ class PorcupineTaskBarIcon(wx.TaskBarIcon):
 
 
 class Observer:
-    def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd):
+    def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd, chkbox_dmesg, chkbox_bash_history):
         self.context = Context()
         self.evil = Evil(self)
         self.radio_mode = radio_mode
         self.chkbox_usb = chkbox_usb
         self.chkbox_cd = chkbox_cd
         self.chkbox_sd = chkbox_sd
+        self.chkbox_dmesg = chkbox_dmesg
+        self.chkbox_bash_history = chkbox_bash_history
 
     def OnStart(self):
         self.monitor = Monitor.from_netlink(self.context)
         self.monitor.filter_by(subsystem='block')
         self.obs = pyudev.wx.WxUDevMonitorObserver(self.monitor)
-        self.obs.Bind(pyudev.wx.EVT_DEVICE_EVENT, self.OnDispatch)
+        self.obs.Bind(pyudev.wx.EVT_DEVICE_EVENT, self.Action_dispatcher)
         self.monitor.start()
 
     def OnStop(self):
         self.obs.enabled = False
 
-    def OnDispatch(self, event):
+    def Action_dispatcher(self, event):
         if(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_usb.GetValue() == True):
-            self.evil.OnReboot()   
+            self.log_dispatcher(self.chkbox_dmesg, self.chkbox_bash_history)
+            self.evil.Reboot()
         elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_usb.GetValue() == True):
-            self.evil.OnOverwrite(event.device)
+            self.evil.Overwrite(event.device)
+            self.log_dispatcher(self.chkbox_dmesg, self.chkbox_bash_history)
         elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_usb.GetValue() == True):
-            self.evil.OnOverwrite(event.device)
-            self.evil.OnReboot()
+            self.evil.Overwrite(event.device)
+            self.log_dispatcher(self.chkbox_dmesg, self.chkbox_bash_history)
+            self.evil.Reboot()
         elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_cd.GetValue() == True):
-            self.evil.OnReboot() 
+            self.log_dispatcher(self.chkbox_dmesg, self.chkbox_bash_history)
+            self.evil.Reboot() 
         elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_cd.GetValue() == True):
-            self.evil.OnEject(event.device)
+            self.log_dispatcher(self.chkbox_dmesg, self.chkbox_bash_history)
+            self.evil.Eject(event.device)
         elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_cd.GetValue() == True):
-            self.evil.OnEject(event.device)
-            self.evil.OnReboot()
+            self.log_dispatcher(self.chkbox_dmesg, self.chkbox_bash_history)
+            self.evil.Eject(event.device)
+            self.evil.Reboot()
         else:
             pass
 
@@ -137,22 +148,36 @@ class Observer:
     def is_sd(self, event):
         pass
 
+    def log_dispatcher(self, chkbox_dmesg, chkbox_bash_history):
+        if(self.chkbox_dmesg.GetValue() == True):
+            self.evil.clean_dmesg()
+        if(self.chkbox_bash_history.GetValue() == True):
+            self.evil.clean_bash_history()
 
 
 class Evil:
     def __init__(self, observer):
         self.obs = observer
 
-    def OnReboot(self):
+    def Reboot(self):
         retcode = subprocess.call("reboot", shell = True)
 
-    def OnOverwrite(self, device):
+    def Overwrite(self, device):
         dev = str(device.device_node)
         retcode = subprocess.call("cat /dev/urandom > " + dev, shell = True)
 
-    def OnEject(self, device):
+    def Eject(self, device):
         dev = str(device.device_node)
         retcode = subprocess.call("eject -v " + dev, shell = True)
+
+    def clean_bash_history(self):
+        home = os.getenv("HOME")
+        histfile = home + '/.bash_history'
+        subprocess.call("shred -z -n 5 " + histfile, shell = True)
+
+    def clean_dmesg(self):
+        subprocess.call("dmesg -C", shell = True)
+        subprocess.call("shred -z -n 5 /var/log/dmesg*", shell = True)
 
 
 class Porcupine_app(wx.App):
