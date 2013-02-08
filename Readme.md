@@ -7,7 +7,7 @@ It listens for udev events and could take 3 different actions when certain stora
   3. Offense + Defense (The previus modes, combined)<br>
 
 When one of this action is performed, Porcupine will allso wipe .bash_history file and dmesg pipe and logs,<br> 
-through linux command shred.<br>
+through linux command shred. (Thanks to Stoals for the hint!)<br>
 
 I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
