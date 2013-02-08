@@ -2,19 +2,20 @@
 <resource xmlns="http://www.wxwindows.org/wxxrc" version="2.3.0.1">
 	<object class="wxFrame" name="Porcupine_settings">
 		<style>wxCLOSE_BOX|wxMINIMIZE_BOX|wxTAB_TRAVERSAL</style>
-		<size>325,180</size>
 		<title>Porcupine - Settings</title>
 		<centered>1</centered>
 		<aui_managed>0</aui_managed>
-		<object class="wxFlexGridSizer">
+		<object class="wxStatusBar" name="statsbar">
+			<style>wxST_SIZEGRIP</style>
+			<fields>1</fields>
+		</object>
+		<object class="wxGridSizer">
 			<rows>2</rows>
 			<cols>2</cols>
 			<vgap>0</vgap>
 			<hgap>0</hgap>
-			<growablecols></growablecols>
-			<growablerows></growablerows>
 			<object class="sizeritem">
-				<option>0</option>
+				<option>1</option>
 				<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND</flag>
 				<border>5</border>
 				<object class="wxRadioBox" name="radiobox_mode">
@@ -31,8 +32,8 @@
 				</object>
 			</object>
 			<object class="sizeritem">
-				<option>0</option>
-				<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+				<option>1</option>
+				<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND</flag>
 				<border>5</border>
 				<object class="wxStaticBoxSizer">
 					<orient>wxVERTICAL</orient>
@@ -67,53 +68,32 @@
 				</object>
 			</object>
 			<object class="sizeritem">
-				<option>0</option>
-				<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+				<option>1</option>
+				<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
 				<border>5</border>
-				<object class="wxFlexGridSizer">
-					<rows>1</rows>
-					<cols>2</cols>
-					<vgap>0</vgap>
-					<hgap>0</hgap>
-					<growablecols>0</growablecols>
-					<growablerows>0</growablerows>
+				<object class="wxStaticBoxSizer">
+					<orient>wxVERTICAL</orient>
+					<label>Logs wiping</label>
 					<object class="sizeritem">
 						<option>0</option>
-						<flag>wxALL</flag>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
 						<border>5</border>
-						<object class="wxButton" name="m_button20">
-							<enabled>0</enabled>
-							<hidden>1</hidden>
-							<label>Apply</label>
-							<default>0</default>
+						<object class="wxCheckBox" name="chkbox_dmesg">
+							<label>Clean dmesg pipe</label>
+							<checked>1</checked>
 						</object>
 					</object>
 					<object class="sizeritem">
 						<option>0</option>
-						<flag>wxALL</flag>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
 						<border>5</border>
-						<object class="wxButton" name="m_button21">
-							<enabled>0</enabled>
-							<hidden>1</hidden>
-							<label>Cancel</label>
-							<default>0</default>
+						<object class="wxCheckBox" name="chkbox_bash_history">
+							<label>Clean bash history</label>
+							<checked>1</checked>
 						</object>
 					</object>
 				</object>
 			</object>
-			<object class="sizeritem">
-				<option>0</option>
-				<flag>wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL</flag>
-				<border>5</border>
-				<object class="wxCheckBox" name="chkbox_logs">
-					<label>Logs</label>
-					<checked>0</checked>
-				</object>
-			</object>
-		</object>
-		<object class="wxStatusBar" name="statsbar">
-			<style>wxST_SIZEGRIP</style>
-			<fields>1</fields>
 		</object>
 	</object>
 </resource>
