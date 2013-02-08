@@ -42,7 +42,10 @@ It listens for udev events and could take 3 different actions when certain stora
 </li>
 <li>Offense + Defense (The previus modes, combined)<br>
 </li>
-</ol><p>I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
+</ol><p>When one of this action is performed, Porcupine will allso wipe .bash_history file and dmesg pipe and logs,<br> 
+through linux command shred. (Thanks to <em>Stolas</em> for the hint!)<br></p>
+
+<p>I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
 the intruder will be redirected to FDE password prompt)<br></p>
 
@@ -80,7 +83,9 @@ e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
 <li>HD with Full Disk Encryption enabled e with a sifficient strong password</li>
 </ul><h1>Usage:</h1>
 
-<p>Simply run it with superadmin privileges<br></p>
+<p>Simply run it with superadmin privileges.<br></p>
+
+<p>e.g. To run and detach from console: <em>sudo nohup ./Porcupine.py &amp;</em><br></p>
 
 <h1>ToDo:</h1>
 
@@ -89,7 +94,7 @@ e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
 </li>
 <li>Add a checksum system for personal pendrives<br>
 </li>
-<li>Add the options to run default actions when device is detected<br>
+<li>Add the options to run custom actions when device is detected<br>
 </li>
 <li>Add Shortcut and menu option to hide the trayicon (partially implemented. At the moment<br>
 only hide is possible, no resume from hide)<br>
