@@ -6,6 +6,9 @@ It listens for udev events and could take 3 different actions when certain stora
   2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD ROM it'll be eject)<br>
   3. Offense + Defense (The previus modes, combined)<br>
 
+When one of this action is performed, Porcupine will allso wipe .bash_history file and dmesg pipe and logs,<br> 
+through linux command shred.<br>
+
 I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
 the intruder will be redirected to FDE password prompt)<br>
@@ -35,14 +38,16 @@ For every reference about the original concept by int0x80 please look at:<br>
 
 # Usage:
 
-Simply run it with superadmin privileges<br>
+Simply run it with superadmin privileges.<br>
+
+e.g. To run and detach from console: sudo nohup ./Porcupine.py &<br>
 
 
 # ToDo:
 
 - Add MMC/SD/others controls<br>
 - Add a checksum system for personal pendrives<br>
-- Add the options to run default actions when device is detected<br>
+- Add the options to run custom actions when device is detected<br>
 - Add Shortcut and menu option to hide the trayicon (partially implemented. At the moment<br>
   only hide is possible, no resume from hide)<br>
 - Password protect Quit action (maybe)<br>
