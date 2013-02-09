@@ -13,7 +13,7 @@ class Porcupine_main(wx.Frame):
         self.tskic = PorcupineTaskBarIcon(self)
 
     def InitUI(self):
-        self.ui = xrc.XmlResource('Porcupine.xrc')
+        self.ui = xrc.XmlResource('ui/Porcupine.xrc')
         self.frame_settings = self.ui.LoadFrame(None, 'Porcupine_settings')
         
         self.radio_mode = xrc.XRCCTRL(self.frame_settings, "radiobox_mode")
@@ -63,7 +63,7 @@ class PorcupineTaskBarIcon(wx.TaskBarIcon):
     def __init__(self, frame):
         wx.TaskBarIcon.__init__(self)
         self.frame = frame
-        self.SetIcon(wx.Icon('porcupine_icon.png', wx.BITMAP_TYPE_PNG), 'Porcupine')
+        self.SetIcon(wx.Icon('icons/porcupine_icon.png', wx.BITMAP_TYPE_PNG), 'Porcupine')
         self.Bind(wx.EVT_MENU, self.frame.ObserverStart, id=1)
         self.Bind(wx.EVT_MENU, self.frame.ObserverStop, id=2)
         self.Bind(wx.EVT_MENU, self.frame.Settings, id=3)
