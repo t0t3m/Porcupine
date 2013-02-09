@@ -1,11 +1,11 @@
-import lib.evil as doom
+import lib.evil
 import pyudev.wx
 from pyudev import Context, Monitor
 
 class Observer:
     def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd, chkbox_dmesg, chkbox_bash_history):
         self.context = Context()
-        self.evil = doom.Evil(self)
+        self.evil = lib.evil.Evil(self)
         self.radio_mode = radio_mode
         self.chkbox_usb = chkbox_usb
         self.chkbox_cd = chkbox_cd
@@ -26,24 +26,24 @@ class Observer:
     def actions_to_take(self, event):
         if(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_usb.GetValue() == True):
             self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.doom.evil.Reboot()
+            self.evil.Reboot()
         elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_usb.GetValue() == True):
-            self.doom.evil.Overwrite(event.device)
+            self.evil.Overwrite(event.device)
             self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
         elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_usb.GetValue() == True):
-            self.doom.evil.Overwrite(event.device)
+            self.evil.Overwrite(event.device)
             self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.doom.evil.Reboot()
+            self.evil.Reboot()
         elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_cd.GetValue() == True):
             self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.doom.evil.Reboot() 
+            self.evil.Reboot() 
         elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_cd.GetValue() == True):
             self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.doom.evil.Eject(event.device)
+            self.evil.Eject(event.device)
         elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_cd.GetValue() == True):
             self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.doom.evil.Eject(event.device)
-            self.doom.evil.Reboot()
+            self.evil.Eject(event.device)
+            self.evil.Reboot()
         else:
             pass
 
@@ -64,6 +64,6 @@ class Observer:
 
     def log_actions(self, chkbox_dmesg, chkbox_bash_history):
         if(self.chkbox_dmesg.GetValue() == True):
-            self.doom.evil.clean_dmesg()
+            self.evil.clean_dmesg()
         if(self.chkbox_bash_history.GetValue() == True):
-            self.doom.evil.clean_bash_history()
+            self.evil.clean_bash_history()
