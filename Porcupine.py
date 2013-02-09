@@ -9,7 +9,7 @@ class Porcupine_main(wx.Frame):
     def __init__(self):
         self.InitUI()
         self.observer_status = 0
-        self.obs = lib.observer.Observer(self.radio_mode, self.chkbox_usb, self.chkbox_cd, self.chkbox_sd, self.chkbox_dmesg, self.chkbox_bash_history)
+        self.obs = lib.observer.Observer(self.radio_mode, self.chkbox_usb, self.chkbox_cd, self.chkbox_sd, self.chkbox_dmesg, self.chkbox_bash_history, self.chkbox_general_logs)
         self.tskic = PorcupineTaskBarIcon(self)
 
     def InitUI(self):
@@ -22,6 +22,7 @@ class Porcupine_main(wx.Frame):
         self.chkbox_sd = xrc.XRCCTRL(self.frame_settings, "chkbox_sd")
         self.chkbox_dmesg = xrc.XRCCTRL(self.frame_settings, "chkbox_dmesg")
         self.chkbox_bash_history = xrc.XRCCTRL(self.frame_settings, "chkbox_bash_history")
+        self.chkbox_general_logs = xrc.XRCCTRL(self.frame_settings, "chkbox_general_logs")
         self.frame_settings.Bind(wx.EVT_CLOSE, self.FrameClose)
 
     def OnHide(self, event):

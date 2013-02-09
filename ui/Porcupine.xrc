@@ -92,6 +92,15 @@
 							<checked>1</checked>
 						</object>
 					</object>
+					<object class="sizeritem">
+						<option>0</option>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
+						<border>5</border>
+						<object class="wxCheckBox" name="chkbox_general_logs">
+							<label>Clean logs</label>
+							<checked>1</checked>
+						</object>
+					</object>
 				</object>
 			</object>
 		</object>

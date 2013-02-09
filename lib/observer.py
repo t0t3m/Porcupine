@@ -3,7 +3,7 @@ import pyudev.wx
 from pyudev import Context, Monitor
 
 class Observer:
-    def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd, chkbox_dmesg, chkbox_bash_history):
+    def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd, chkbox_dmesg, chkbox_bash_history, chkbox_general_logs):
         self.context = Context()
         self.evil = lib.evil.Evil(self)
         self.radio_mode = radio_mode
@@ -12,6 +12,7 @@ class Observer:
         self.chkbox_sd = chkbox_sd
         self.chkbox_dmesg = chkbox_dmesg
         self.chkbox_bash_history = chkbox_bash_history
+        self.chkbox_general_logs = chkbox_general_logs
 
     def Start(self):
         self.monitor = Monitor.from_netlink(self.context)
@@ -67,3 +68,5 @@ class Observer:
             self.evil.clean_dmesg()
         if(self.chkbox_bash_history.GetValue() == True):
             self.evil.clean_bash_history()
+        if(self.chkbox_general_logs.GetValue() == True):
+            self.evil.clean_logs()
