@@ -6,15 +6,15 @@ class Evil:
         self.obs = observer
 
     def Reboot(self):
-        retcode = subprocess.call("reboot", shell = True)
+        subprocess.call("reboot", shell = True)
 
     def Overwrite(self, device):
         dev = str(device.device_node)
-        retcode = subprocess.call("cat /dev/urandom > " + dev, shell = True)
+        subprocess.call("cat /dev/urandom > " + dev, shell = True)
 
     def Eject(self, device):
         dev = str(device.device_node)
-        retcode = subprocess.call("eject -v " + dev, shell = True)
+        subprocess.call("eject -v " + dev, shell = True)
 
     def clean_bash_history(self):
         home = os.getenv("HOME")
