@@ -3,11 +3,13 @@
 Software to prevent unauthorized physical access to your machine.<br>
 It listens for udev events and could take 3 different actions when certain storage devices are detected:<br>
   1. Defense (Reboot PC)<br>
+  2. Freeze PC (Launch a fork bomb to freeze PC and fill all RAM in short time)<br>
   2. Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD ROM it'll be eject)<br>
   3. Offense + Defense (The previus modes, combined)<br>
+  4. Learning (Learning mode to populate trusted devices list)
 
-When one of this action is performed, Porcupine will allso wipe .bash_history file and dmesg pipe and logs,<br> 
-through linux command shred. (Thanks to _Stolas_ for the hint!)<br>
+The software is composed also by a "Emergency Wipe List": when an action like defense or offense is erased,<br>
+porcupine will also wipe the file in this list through secure-delete software by THC<br>
 
 I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
@@ -28,19 +30,20 @@ For every reference about the original concept by int0x80 please look at:<br>
   - python >= 2.7<br>
   - python-wxgtk2.8 >= 2.8.12.1<br>
   - pyudev >= 0.16.1<br>
+  - secure-delete (this is the name on ubuntu repos, check for your own distribution)<br>
     e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
          About pyudev >= 0.16.1 on ubuntu systems  look at:<br>
          https://launchpad.net/ubuntu/raring/i386/python-pyudev/0.16.1-1<br>
 
 **Should:**<br>
-- HD with Full Disk Encryption enabled e with a sifficient strong password
+- HD with Full Disk Encryption enabled e with a sifficient strong password. This permits to maximize the effets<br>
 
 
 # Usage:
 
 Simply run it with superadmin privileges.<br>
 
-e.g. To run and detach from console: _sudo nohup ./Porcupine.py &_<br>
+e.g. To run and detach from console: _sudo nohup ./porcupine.py &_<br>
 
 
 # ToDo:
@@ -54,12 +57,9 @@ e.g. To run and detach from console: _sudo nohup ./Porcupine.py &_<br>
 - Password protect Settings menu (maybe)<br>
 - Password protect Stop action (maybe)<br>
 - Password protect Show trayicon action (maybe)<br>
-- Fill or remove the about messagebox<br>
-- Fix tray icon<br>
-- Clean and revise code<br>
 - More Tests<br>
 
 
 # Known bugs:
 
-- Sometimes the tray icon is displayed wrong<br>
+- None from the last tests, but please help me to improve the software. More testers are better than me alone!
