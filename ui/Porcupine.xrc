@@ -5,100 +5,206 @@
 		<title>Porcupine - Settings</title>
 		<centered>1</centered>
 		<aui_managed>0</aui_managed>
-		<object class="wxStatusBar" name="statsbar">
-			<style>wxST_SIZEGRIP</style>
-			<fields>1</fields>
-		</object>
-		<object class="wxGridSizer">
-			<rows>2</rows>
-			<cols>2</cols>
-			<vgap>0</vgap>
-			<hgap>0</hgap>
-			<object class="sizeritem">
-				<option>1</option>
-				<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND</flag>
-				<border>5</border>
-				<object class="wxRadioBox" name="radiobox_mode">
-					<style>wxRA_SPECIFY_COLS</style>
-					<tooltip>Defend: Shutdown PC\nOffend: Erase/unmount/eject Intruder\nCustom: Execute custom command</tooltip>
-					<label>Mode</label>
-					<selection>0</selection>
-					<content>
-						<item>Defensive</item>
-						<item>Offensive</item>
-						<item>Offensive + Defensive</item>
-					</content>
-					<dimension>1</dimension>
+		<object class="wxNotebook" name="m_notebook1">
+			<object class="notebookpage">
+				<label>Porcupine</label>
+				<selected>1</selected>
+				<object class="wxPanel" name="m_panel1">
+					<style>wxTAB_TRAVERSAL</style>
+					<object class="wxFlexGridSizer">
+						<rows>1</rows>
+						<cols>2</cols>
+						<vgap>0</vgap>
+						<hgap>0</hgap>
+						<growablecols>0,1</growablecols>
+						<growablerows>0</growablerows>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<object class="wxRadioBox" name="radiobox_mode">
+								<style>wxRA_SPECIFY_COLS</style>
+								<tooltip>Defend: Shutdown PC\nOffend: Erase/unmount/eject Intruder\nCustom: Execute custom command</tooltip>
+								<label>Mode</label>
+								<selection>0</selection>
+								<content>
+									<item>Defensive</item>
+									<item>Freeze PC</item>
+									<item>Offensive</item>
+									<item>Offensive + Defensive</item>
+									<item>Learning</item>
+								</content>
+								<dimension>1</dimension>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticBoxSizer">
+								<orient>wxVERTICAL</orient>
+								<label>Devices</label>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag></flag>
+									<border>5</border>
+									<object class="wxCheckBox" name="chkbox_usb">
+										<label>USB</label>
+										<checked>1</checked>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag></flag>
+									<border>5</border>
+									<object class="wxCheckBox" name="chkbox_cd">
+										<label>CD Rom</label>
+										<checked>1</checked>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag></flag>
+									<border>5</border>
+									<object class="wxCheckBox" name="chkbox_sd">
+										<enabled>0</enabled>
+										<label>SD/MMC/XD</label>
+										<checked>1</checked>
+									</object>
+								</object>
+							</object>
+						</object>
+					</object>
 				</object>
 			</object>
-			<object class="sizeritem">
-				<option>1</option>
-				<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND</flag>
-				<border>5</border>
-				<object class="wxStaticBoxSizer">
-					<orient>wxVERTICAL</orient>
-					<label>Devices</label>
-					<object class="sizeritem">
-						<option>0</option>
-						<flag></flag>
-						<border>5</border>
-						<object class="wxCheckBox" name="chkbox_usb">
-							<label>USB</label>
-							<checked>1</checked>
+			<object class="notebookpage">
+				<label>Trusted devices</label>
+				<selected>0</selected>
+				<object class="wxPanel" name="m_panel3">
+					<style>wxTAB_TRAVERSAL</style>
+					<object class="wxFlexGridSizer">
+						<rows>2</rows>
+						<cols>1</cols>
+						<vgap>0</vgap>
+						<hgap>0</hgap>
+						<growablecols>0</growablecols>
+						<growablerows>0</growablerows>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
+							<border>5</border>
+							<object class="wxListCtrl" name="lst_trusted_devices">
+								<style>wxLC_HRULES|wxLC_REPORT|wxLC_VRULES</style>
+							</object>
 						</object>
-					</object>
-					<object class="sizeritem">
-						<option>0</option>
-						<flag></flag>
-						<border>5</border>
-						<object class="wxCheckBox" name="chkbox_cd">
-							<label>CD Rom</label>
-							<checked>1</checked>
-						</object>
-					</object>
-					<object class="sizeritem">
-						<option>0</option>
-						<flag></flag>
-						<border>5</border>
-						<object class="wxCheckBox" name="chkbox_sd">
-							<label>SD/MMC/XD</label>
-							<checked>1</checked>
+						<object class="sizeritem">
+							<option>1</option>
+							<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL</flag>
+							<border>5</border>
+							<object class="wxGridSizer">
+								<rows>1</rows>
+								<cols>2</cols>
+								<vgap>0</vgap>
+								<hgap>0</hgap>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<border>5</border>
+									<object class="wxButton" name="btn_delete_device">
+										<label>Delete</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="btn_refresh_devices">
+										<label>Refresh</label>
+										<default>0</default>
+									</object>
+								</object>
+							</object>
 						</object>
 					</object>
 				</object>
 			</object>
-			<object class="sizeritem">
-				<option>1</option>
-				<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</flag>
-				<border>5</border>
-				<object class="wxStaticBoxSizer">
-					<orient>wxVERTICAL</orient>
-					<label>Logs wiping</label>
-					<object class="sizeritem">
-						<option>0</option>
-						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
-						<border>5</border>
-						<object class="wxCheckBox" name="chkbox_dmesg">
-							<label>Clean dmesg pipe</label>
-							<checked>1</checked>
+			<object class="notebookpage">
+				<label>Emergency wipe</label>
+				<selected>0</selected>
+				<object class="wxPanel" name="m_panel2">
+					<style>wxTAB_TRAVERSAL</style>
+					<object class="wxFlexGridSizer">
+						<rows>2</rows>
+						<cols>1</cols>
+						<vgap>0</vgap>
+						<hgap>0</hgap>
+						<growablecols>0</growablecols>
+						<growablerows>0</growablerows>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
+							<border>5</border>
+							<object class="wxListCtrl" name="lstctrl_files">
+								<style>wxLC_HRULES|wxLC_REPORT|wxLC_VRULES</style>
+							</object>
 						</object>
-					</object>
-					<object class="sizeritem">
-						<option>0</option>
-						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
-						<border>5</border>
-						<object class="wxCheckBox" name="chkbox_bash_history">
-							<label>Clean bash history</label>
-							<checked>1</checked>
-						</object>
-					</object>
-					<object class="sizeritem">
-						<option>0</option>
-						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
-						<border>5</border>
-						<object class="wxCheckBox" name="chkbox_general_logs">
-							<label>Clean logs</label>
-							<checked>1</checked>
+						<object class="sizeritem">
+							<option>1</option>
+							<flag>wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<object class="wxBoxSizer">
+								<orient>wxHORIZONTAL</orient>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxGridSizer">
+										<rows>1</rows>
+										<cols>2</cols>
+										<vgap>0</vgap>
+										<hgap>0</hgap>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<border>5</border>
+											<object class="wxFilePickerCtrl" name="picker_file">
+												<value></value>
+												<message>Select a file</message>
+												<wildcard>*.*</wildcard>
+												<style>wxFLP_DEFAULT_STYLE</style>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<border>5</border>
+											<object class="wxButton" name="btn_add_file">
+												<label>Add</label>
+												<default>0</default>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<border>5</border>
+									<object class="wxButton" name="btn_del_file">
+										<label>Delete</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxALIGN_CENTER_VERTICAL</flag>
+									<border>5</border>
+									<object class="wxButton" name="btn_refresh_files">
+										<label>Refresh</label>
+										<default>0</default>
+									</object>
+								</object>
+							</object>
 						</object>
 					</object>
 				</object>

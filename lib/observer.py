@@ -1,72 +1,102 @@
-import lib.evil
+import lib.evil as evil
+import lib.dustman as dustman
 import pyudev.wx
 from pyudev import Context, Monitor
 
+DEVICES_FILE = "./configs/devices.conf"
+
 class Observer:
-    def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd, chkbox_dmesg, chkbox_bash_history, chkbox_general_logs):
+    def __init__(self, radio_mode, chkbox_usb, chkbox_cd, chkbox_sd, dev_lst, devices_list, lstctrl_devices, files_list):
+
         self.context = Context()
-        self.evil = lib.evil.Evil(self)
+
+        # Load modules
+        self.evil = evil.Evil()
+        self.dustman = dustman.Dustman()
+
+        # Create widgets istances
         self.radio_mode = radio_mode
         self.chkbox_usb = chkbox_usb
         self.chkbox_cd = chkbox_cd
         self.chkbox_sd = chkbox_sd
-        self.chkbox_dmesg = chkbox_dmesg
-        self.chkbox_bash_history = chkbox_bash_history
-        self.chkbox_general_logs = chkbox_general_logs
+
+        # Devices lists setup
+        self.dev_lst = dev_lst
+        self.devices_list = devices_list
+        self.lstctrl_devices = lstctrl_devices
+
+        # Files list setup
+        self.files_list = files_list
 
     def Start(self):
         self.monitor = Monitor.from_netlink(self.context)
         self.monitor.filter_by(subsystem='block')
         self.obs = pyudev.wx.WxUDevMonitorObserver(self.monitor)
-        self.obs.Bind(pyudev.wx.EVT_DEVICE_EVENT, self.actions_to_take)
+        self.obs.Bind(pyudev.wx.EVT_DEVICE_EVENT, self.PorcupineActions)
         self.monitor.start()
 
+    ''' Stop observer '''
     def Stop(self):
         self.obs.enabled = False
 
-    def actions_to_take(self, event):
-        if(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_usb.GetValue() == True):
-            self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
+    ''' The core of porcupine, where decisions are made'''
+    def PorcupineActions(self, event):
+        # USB EVENTS
+        if(self.IsUSB(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_usb.GetValue() == True):
+            if(self.dev_lst.FindItem(self.devices_list, event.device['ID_SERIAL_SHORT']) == False):
+                self.dustman.WipeFileList(self.files_list)
+                self.evil.Reboot()
+            else:
+                pass
+        elif(self.IsUSB(event) == True and self.radio_mode.GetStringSelection() == "Freeze PC" and self.chkbox_usb.GetValue() == True):
+            if(self.dev_lst.FindItem(self.devices_list, event.device['ID_SERIAL_SHORT']) == False):
+                self.evil.SimForkBomb()
+                #self.evil.ThreadedForkBomb2()
+            else:
+                pass
+        elif(self.IsUSB(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_usb.GetValue() == True):
+            if(self.dev_lst.FindItem(self.devices_list, event.device['ID_SERIAL_SHORT']) == False):
+                self.evil.Overwrite(event.device)
+            else:
+                pass
+        elif(self.IsUSB(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_usb.GetValue() == True):
+            if(self.dev_lst.FindItem(self.devices_list, event.device['ID_SERIAL_SHORT']) == False):
+                self.evil.Overwrite(event.device)
+                self.evil.Reboot()
+            else:
+                pass
+        elif(self.IsUSB(event) == True and self.radio_mode.GetStringSelection() == "Learning"):
+            if(self.dev_lst.FindItem(self.devices_list, event.device['ID_SERIAL_SHORT']) == False):
+                self.dev_lst.AddDevice(self.devices_list, event.device['ID_SERIAL_SHORT'], event.device['ID_BUS'])
+                self.dev_lst.ListctrlUpdate(self.lstctrl_devices, self.devices_list, DEVICES_FILE)
+            else:
+                pass
+        # CD EVENTS
+        elif(self.IsCD(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_cd.GetValue() == True):
             self.evil.Reboot()
-        elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_usb.GetValue() == True):
-            self.evil.Overwrite(event.device)
-            self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-        elif(self.is_usb(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_usb.GetValue() == True):
-            self.evil.Overwrite(event.device)
-            self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.evil.Reboot()
-        elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Defensive" and self.chkbox_cd.GetValue() == True):
-            self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
-            self.evil.Reboot() 
-        elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_cd.GetValue() == True):
-            self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
+        elif(self.IsCD(event) == True and self.radio_mode.GetStringSelection() == "Offensive" and self.chkbox_cd.GetValue() == True):
             self.evil.Eject(event.device)
-        elif(self.is_cd(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_cd.GetValue() == True):
-            self.log_actions(self.chkbox_dmesg, self.chkbox_bash_history)
+        elif(self.IsCD(event) == True and self.radio_mode.GetStringSelection() == "Offensive + Defensive" and self.chkbox_cd.GetValue() == True):
             self.evil.Eject(event.device)
             self.evil.Reboot()
+        # OTHER EVENTS
         else:
             pass
 
-    def is_usb(self, event):
+    ''' Check if the event is generated by an USB device '''
+    def IsUSB(self, event):
         if(str(event.action) == "add" and str(event.device.device_node[7]) != "a" and str(event.device.device_node[5:7]) == "sd" and event.device['ID_BUS'] != "scsi" and event.device['ID_BUS'] == "usb"):
             return True
         else:
             return False
 
-    def is_cd(self, event):
+    ''' Check if the event is generated by a CD/DVD device '''
+    def IsCD(self, event):
         if(str(event.action) == "change" and str(event.device.device_node[5:7]) == "sr" and self.chkbox_cd.GetValue() == True and event.device['ID_BUS'] == "scsi" and event.device['ID_TYPE'] == 'cd'):
             return True
         else:
             return False
 
-    def is_sd(self, event):
+    ''' Check if the event is generated by a MMC/SD/XD device '''
+    def IsSD(self, event):
         pass
-
-    def log_actions(self, chkbox_dmesg, chkbox_bash_history):
-        if(self.chkbox_dmesg.GetValue() == True):
-            self.evil.clean_dmesg()
-        if(self.chkbox_bash_history.GetValue() == True):
-            self.evil.clean_bash_history()
-        if(self.chkbox_general_logs.GetValue() == True):
-            self.evil.clean_logs()

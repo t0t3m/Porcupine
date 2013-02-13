@@ -1,32 +1,31 @@
 import subprocess
 import os
 
-class Evil:
-    def __init__(self, observer):
-        self.obs = observer
+import threading
+from multiprocessing import Pool
 
+class Evil:
+    ''' Reboot PC '''
     def Reboot(self):
         subprocess.call("reboot", shell = True)
 
+    ''' Simulate fork bomb to freeze PC and overwrite all RAM'''
+    def SimForkBomb(self):
+        while True:
+            os.fork()
+
+    ''' Overwrite an intruder device '''
     def Overwrite(self, device):
         dev = str(device.device_node)
         subprocess.call("cat /dev/urandom > " + dev, shell = True)
 
+    ''' Eject an intruder device '''
     def Eject(self, device):
         dev = str(device.device_node)
         subprocess.call("eject -v " + dev, shell = True)
 
-    def clean_bash_history(self):
-        home = os.getenv("HOME")
-        histfile = home + '/.bash_history'
-        subprocess.call("shred -z -n 5 " + histfile, shell = True)
-
-    def clean_dmesg(self):
-        subprocess.call("dmesg -C", shell = True)
-        subprocess.call("shred -z -n 5 /var/log/dmesg*", shell = True)
-
-    def clean_logs(self):
-        subprocess.call("shred -z -n 5 /var/log/kern*", shell = True)
-        subprocess.call("shred -z -n 5 /var/log/auth*", shell = True)
-        subprocess.call("shred -z -n 5 /var/log/boot*", shell = True)
-        subprocess.call("shred -z -n 5 /var/log/syslog*", shell = True)
+    '''
+    def ThreadedForkBomb(self):
+        threading.Thread(target = self.SimForkBomb).start()
+        threading.Thread(target = self.SimForkBomb).start()
+    '''
