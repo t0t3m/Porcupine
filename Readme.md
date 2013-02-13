@@ -41,7 +41,8 @@ For every reference about the original concept by int0x80 please look at:<br>
 
 # Usage:
 
-Simply run it with superadmin privileges.<br>
+- In main folder add an ampty folder called _configs_
+- Simply run it with superadmin privileges.<br>
 
 e.g. To run and detach from console: _sudo nohup ./porcupine.py &_<br>
 
