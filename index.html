@@ -38,12 +38,15 @@ It listens for udev events and could take 3 different actions when certain stora
 <ol>
 <li>Defense (Reboot PC)<br>
 </li>
+<li>Freeze PC (Launch a fork bomb to freeze PC and fill all RAM in short time)<br>
+</li>
 <li>Offense (If it's a USB drive, it'll be overwritten, if it's a CD/DVD ROM it'll be eject)<br>
 </li>
 <li>Offense + Defense (The previus modes, combined)<br>
 </li>
-</ol><p>When one of this action is performed, Porcupine will allso wipe .bash_history file and dmesg pipe and logs,<br> 
-through linux command shred. (Thanks to <em>Stolas</em> for the hint!)<br></p>
+<li>Learning (Learning mode to populate trusted devices list)</li>
+</ol><p>The software is composed also by a "Emergency Wipe List": when an action like defense or offense is erased,<br>
+porcupine will also wipe the file in this list through secure-delete software by THC<br></p>
 
 <p>I suggest you (it's quite a must...) to use Full Disk Encryption in order to obtain the best results<br>
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
@@ -72,6 +75,8 @@ For every reference about the original concept by int0x80 please look at:<br></p
 <li>python-wxgtk2.8 &gt;= 2.8.12.1<br>
 </li>
 <li>pyudev &gt;= 0.16.1<br>
+</li>
+<li>secure-delete (this is the name on ubuntu repos, check for your own distribution)<br>
 e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
  About pyudev &gt;= 0.16.1 on ubuntu systems  look at:<br><a href="https://launchpad.net/ubuntu/raring/i386/python-pyudev/0.16.1-1">https://launchpad.net/ubuntu/raring/i386/python-pyudev/0.16.1-1</a><br>
 </li>
@@ -80,12 +85,13 @@ e.g. On Ubuntu 11.04: sudo apt-get install python-wxgtk2.8 python<br>
 </ul><p><strong>Should:</strong><br></p>
 
 <ul>
-<li>HD with Full Disk Encryption enabled e with a sifficient strong password</li>
+<li>HD with Full Disk Encryption enabled e with a sifficient strong password. This permits to maximize the effets<br>
+</li>
 </ul><h1>Usage:</h1>
 
 <p>Simply run it with superadmin privileges.<br></p>
 
-<p>e.g. To run and detach from console: <em>sudo nohup ./Porcupine.py &amp;</em><br></p>
+<p>e.g. To run and detach from console: <em>sudo nohup ./porcupine.py &amp;</em><br></p>
 
 <h1>ToDo:</h1>
 
@@ -107,19 +113,12 @@ only hide is possible, no resume from hide)<br>
 </li>
 <li>Password protect Show trayicon action (maybe)<br>
 </li>
-<li>Fill or remove the about messagebox<br>
-</li>
-<li>Fix tray icon<br>
-</li>
-<li>Clean and revise code<br>
-</li>
 <li>More Tests<br>
 </li>
 </ul><h1>Known bugs:</h1>
 
 <ul>
-<li>Sometimes the tray icon is displayed wrong<br>
-</li>
+<li>None from the last tests, but please help me to improve the software. More testers are better than me alone!</li>
 </ul>
       </section>
       <footer>
