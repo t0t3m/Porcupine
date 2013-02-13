@@ -15,7 +15,7 @@ I suggest you (it's quite a must...) to use Full Disk Encryption in order to obt
 (e.g. What happens if someone try to stick his USB pendrive in your PC? In defensive mode, the PC will reboot and<br> 
 the intruder will be redirected to FDE password prompt)<br>
 
-This program is created with int0x80 talk "Ant-Forensic for the Louise" from Derbycon 2012 in mind.<br>
+This program is created with int0x80 talk "Anti-Forensic for the Louise" from Derbycon 2012 in mind.<br>
 For every reference about the original concept by int0x80 please look at:<br>
 - GitHub  - https://github.com/int0x80/anti-forensics<br>
 - Youtube - "Anti-Forensic for the Louise" http://www.youtube.com/watch?v=-HK1JHR7LIM<br>
